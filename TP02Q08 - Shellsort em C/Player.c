@@ -392,7 +392,7 @@ int main() {
                     if(strcmp(player_getName(&mainPlayers[j - gap]), player_getName(&temp)) > 0) mainPlayers[j] = mainPlayers[j - gap];
                     else break;
                 }
-                else break; // Peso em ordem crescente, saia do loop.
+                else break;
             }
 
             mainPlayers[j] = temp;
