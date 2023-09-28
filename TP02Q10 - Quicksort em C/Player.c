@@ -81,9 +81,6 @@ void proccess_attribute(char *attribute, char **substringStart, char **substring
     
     // Clean \n from the end of the string
     if(attribute[strlen(attribute) - 1] == '\n') attribute[strlen(attribute) - 1] = '\0';
-
-    // Clean asterisk from last character if exists
-    if(attribute[strlen(attribute) - 1] == '*') attribute[strlen(attribute) - 1] = '\0';
 }
 
 // ---------------------------------------------------------------------------------------------------- //

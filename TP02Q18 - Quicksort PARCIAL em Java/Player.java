@@ -105,9 +105,6 @@ public class Player {
             if(splitted[i].equals("")) splitted[i] = "nao informado";
         }
 
-        // Remove asterisk from name if exists in last character
-        if(splitted[1].charAt(splitted[1].length() - 1) == '*') splitted[1] = splitted[1].substring(0, splitted[1].length() - 1);
-
         // Set attributes
         this.id = Integer.parseInt(splitted[0]);
         this.name = splitted[1];
