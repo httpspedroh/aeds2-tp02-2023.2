@@ -99,9 +99,9 @@ public class Player {
         String[] splitted = line.split(",", -1);
 
         // Fill empty attributes
-        for (int i = 0; i < splitted.length; i++) {
+        for(int i = 0; i < splitted.length; i++) {
 
-            if (splitted[i].equals("")) splitted[i] = "nao informado";
+            if(splitted[i].equals("")) splitted[i] = "nao informado";
         }
 
         // Set attributes
@@ -165,9 +165,9 @@ public class Player {
     public static Player searchById(int id, ArrayList<Player> players) {
 
         // Search for player
-        for (int i = 0; i < players.size(); i++) {
+        for(int i = 0; i < players.size(); i++) {
 
-            if (players.get(i).getId() == id) return players.get(i);
+            if(players.get(i).getId() == id) return players.get(i);
         }
         return null;
     }
@@ -198,7 +198,7 @@ public class Player {
         String line = inScanner.nextLine();
 
         // While line is not "FIM"
-        while (!line.equals("FIM")) {
+        while(!line.equals("FIM")) {
 
             // Get id
             int id = Integer.parseInt(line);
@@ -207,7 +207,7 @@ public class Player {
             player = searchById(id, allPlayers);
 
             // Print player
-            if (player != null) mainPlayers.add(player);
+            if(player != null) mainPlayers.add(player);
 
             // Read line
             line = inScanner.nextLine();
@@ -236,7 +236,7 @@ public class Player {
         // ----------------- //
 
         // Print mainPlayers array
-        for (int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
+        for(int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
 
         // ----------------------------------------------------------------- //
 

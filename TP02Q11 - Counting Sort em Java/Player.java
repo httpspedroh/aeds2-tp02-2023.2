@@ -99,9 +99,9 @@ public class Player {
         String[] splitted = line.split(",", -1);
 
         // Fill empty attributes
-        for (int i = 0; i < splitted.length; i++) {
+        for(int i = 0; i < splitted.length; i++) {
 
-            if (splitted[i].equals("")) splitted[i] = "nao informado";
+            if(splitted[i].equals("")) splitted[i] = "nao informado";
         }
 
         // Set attributes
@@ -165,9 +165,9 @@ public class Player {
     public static Player searchById(int id, ArrayList<Player> players) {
 
         // Search for player
-        for (int i = 0; i < players.size(); i++) {
+        for(int i = 0; i < players.size(); i++) {
 
-            if (players.get(i).getId() == id) return players.get(i);
+            if(players.get(i).getId() == id) return players.get(i);
         }
         return null;
     }
@@ -177,9 +177,9 @@ public class Player {
 
         int max = Integer.MIN_VALUE;
 
-        for (Player player : players) {
+        for(Player player : players) {
 
-            if (player.getHeight() > max) max = player.getHeight();
+            if(player.getHeight() > max) max = player.getHeight();
         }
         return max;
     }
@@ -210,7 +210,7 @@ public class Player {
         String line = inScanner.nextLine();
 
         // While line is not "FIM"
-        while (!line.equals("FIM")) {
+        while(!line.equals("FIM")) {
 
             // Get id
             int id = Integer.parseInt(line);
@@ -219,7 +219,7 @@ public class Player {
             player = searchById(id, allPlayers);
 
             // Print player
-            if (player != null) mainPlayers.add(player);
+            if(player != null) mainPlayers.add(player);
 
             // Read line
             line = inScanner.nextLine();
@@ -242,16 +242,16 @@ public class Player {
         int[] count = new int[maxHeight + 1];
 
         // Initialize the count array
-        for (int i = 0; i < mainPlayers.size(); i++) count[mainPlayers.get(i).getHeight()]++;
+        for(int i = 0; i < mainPlayers.size(); i++) count[mainPlayers.get(i).getHeight()]++;
 
         // Modify the count array to store the position of elements
-        for (int i = 1; i <= maxHeight; i++) count[i] += count[i - 1];
+        for(int i = 1; i <= maxHeight; i++) count[i] += count[i - 1];
 
         // Create a temporary array to store the sorted output
         Player[] sortedPlayers = new Player[mainPlayers.size()];
 
         // Build the sorted array
-        for (int i = mainPlayers.size() - 1; i >= 0; i--) {
+        for(int i = mainPlayers.size() - 1; i >= 0; i--) {
 
             int height = mainPlayers.get(i).getHeight();
             sortedPlayers[count[height] - 1] = mainPlayers.get(i);
@@ -259,20 +259,20 @@ public class Player {
         }
 
         // Copy the sorted array back to the mainPlayers array
-        for (int i = 0; i < mainPlayers.size(); i++) mainPlayers.set(i, sortedPlayers[i]);
+        for(int i = 0; i < mainPlayers.size(); i++) mainPlayers.set(i, sortedPlayers[i]);
 
         // Use insertion sort to order by key "height" and "name" in draw case
-        for (int i = 1; i < mainPlayers.size(); i++) {
+        for(int i = 1; i < mainPlayers.size(); i++) {
 
             Player key = mainPlayers.get(i);
             int j = i - 1;
 
-            while (j >= 0 && mainPlayers.get(j).getHeight() == key.getHeight()) {
+            while(j >= 0 && mainPlayers.get(j).getHeight() == key.getHeight()) {
 
                 // While and if comparisons
                 comparisons += 2;
 
-                if (mainPlayers.get(j).getName().compareTo(key.getName()) > 0) {
+                if(mainPlayers.get(j).getName().compareTo(key.getName()) > 0) {
 
                     mainPlayers.set(j + 1, mainPlayers.get(j));
                     j--;
@@ -293,7 +293,7 @@ public class Player {
         // ----------------- //
 
         // Print mainPlayers array
-        for (int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
+        for(int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
 
         // ----------------------------------------------------------------- //
 

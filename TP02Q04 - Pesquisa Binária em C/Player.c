@@ -63,9 +63,9 @@ void substring(char *string, char *stringStart, int length) {
 void proccess_attribute(char *attribute, char **substringStart, char **substringEnd, bool isFirstAttribute) {
 
     // Skip first comma
-    if (!isFirstAttribute) {
+    if(!isFirstAttribute) {
         
-        if (*substringEnd != NULL) *substringStart = *substringEnd + 1;
+        if(*substringEnd != NULL) *substringStart = *substringEnd + 1;
         else *substringStart = *substringEnd;
     }
 
@@ -73,7 +73,7 @@ void proccess_attribute(char *attribute, char **substringStart, char **substring
     *substringEnd = strchr(*substringStart, ',');
     
     // Get substring
-    if (*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
+    if(*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
     else strcpy(attribute, *substringStart);
 
     // Set default value if attribute is empty
@@ -294,7 +294,7 @@ void startPlayers() {
 
     fp = fopen(FILE_PATH, "r");
 
-    if (fp == NULL) {
+    if(fp == NULL) {
 
         perror("x Error opening file");
         exit(EXIT_FAILURE);
@@ -321,7 +321,7 @@ void startPlayers() {
     // Close file and free memory
     fclose(fp);
 
-    if (line) free(line);
+    if(line) free(line);
 }
 
 // ---------------------------------------------------------------------------------------------------- //
@@ -402,7 +402,7 @@ int main() {
             int left = 0;
             int right = m - 1;
 
-            while (left <= right) {
+            while(left <= right) {
 
                 int mid = left + (right - left) / 2;
 

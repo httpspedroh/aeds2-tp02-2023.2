@@ -63,9 +63,9 @@ void substring(char *string, char *stringStart, int length) {
 void proccess_attribute(char *attribute, char **substringStart, char **substringEnd, bool isFirstAttribute) {
 
     // Skip first comma
-    if (!isFirstAttribute) {
+    if(!isFirstAttribute) {
         
-        if (*substringEnd != NULL) *substringStart = *substringEnd + 1;
+        if(*substringEnd != NULL) *substringStart = *substringEnd + 1;
         else *substringStart = *substringEnd;
     }
 
@@ -73,7 +73,7 @@ void proccess_attribute(char *attribute, char **substringStart, char **substring
     *substringEnd = strchr(*substringStart, ',');
     
     // Get substring
-    if (*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
+    if(*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
     else strcpy(attribute, *substringStart);
 
     // Set default value if attribute is empty
@@ -291,7 +291,7 @@ void startPlayers() {
 
     fp = fopen(FILE_PATH, "r");
 
-    if (fp == NULL) {
+    if(fp == NULL) {
 
         perror("x Error opening file");
         exit(EXIT_FAILURE);
@@ -318,7 +318,7 @@ void startPlayers() {
     // Close file and free memory
     fclose(fp);
 
-    if (line) free(line);
+    if(line) free(line);
 }
 
 // ---------------------------------------------------------------------------------------------------- //
@@ -370,31 +370,31 @@ int main() {
     // ----------------- //
 
     // Shell sort
-    for (int gap = m / 2; gap > 0; gap /= 2) {
+    for(int gap = m / 2; gap > 0; gap /= 2) {
 
-        for (int i = gap; i < m; i++) {
+        for(int i = gap; i < m; i++) {
 
             Player temp = mainPlayers[i];
             int j;
 
-            for (j = i; j >= gap; j -= gap) {
+            for(j = i; j >= gap; j -= gap) {
 
-                if (player_getWeight(&mainPlayers[j - gap]) > player_getWeight(&temp)) {
+                if(player_getWeight(&mainPlayers[j - gap]) > player_getWeight(&temp)) {
 
                     comparisons++;
                     mainPlayers[j] = mainPlayers[j - gap];
                 } 
-                else if (player_getWeight(&mainPlayers[j - gap]) == player_getWeight(&temp)) {
+                else if(player_getWeight(&mainPlayers[j - gap]) == player_getWeight(&temp)) {
 
                     // In case of a draw in weight, compare by name
                     comparisons++;
 
-                    if (strcmp(player_getName(&mainPlayers[j - gap]), player_getName(&temp)) > 0) mainPlayers[j] = mainPlayers[j - gap];
+                    if(strcmp(player_getName(&mainPlayers[j - gap]), player_getName(&temp)) > 0) mainPlayers[j] = mainPlayers[j - gap];
                     else break;
                 }
                 else break; // Peso em ordem crescente, saia do loop.
             }
-            
+
             mainPlayers[j] = temp;
         }
     }

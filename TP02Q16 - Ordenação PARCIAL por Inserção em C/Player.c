@@ -64,9 +64,9 @@ void substring(char *string, char *stringStart, int length) {
 void proccess_attribute(char *attribute, char **substringStart, char **substringEnd, bool isFirstAttribute) {
 
     // Skip first comma
-    if (!isFirstAttribute) {
+    if(!isFirstAttribute) {
         
-        if (*substringEnd != NULL) *substringStart = *substringEnd + 1;
+        if(*substringEnd != NULL) *substringStart = *substringEnd + 1;
         else *substringStart = *substringEnd;
     }
 
@@ -74,7 +74,7 @@ void proccess_attribute(char *attribute, char **substringStart, char **substring
     *substringEnd = strchr(*substringStart, ',');
     
     // Get substring
-    if (*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
+    if(*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
     else strcpy(attribute, *substringStart);
 
     // Set default value if attribute is empty
@@ -292,7 +292,7 @@ void startPlayers() {
 
     fp = fopen(FILE_PATH, "r");
 
-    if (fp == NULL) {
+    if(fp == NULL) {
 
         perror("x Error opening file");
         exit(EXIT_FAILURE);
@@ -319,7 +319,7 @@ void startPlayers() {
     // Close file and free memory
     fclose(fp);
 
-    if (line) free(line);
+    if(line) free(line);
 }
 
 // ---------------------------------------------------------------------------------------------------- //
@@ -373,7 +373,7 @@ int main() {
     // Partial insertion sort with k = 10
     int k = 10;
 
-    for (int i = 1; i < m; i++) {
+    for(int i = 1; i < m; i++) {
 
         comparisons++;
 
@@ -381,7 +381,7 @@ int main() {
         int j = i - 1;
 
         // Compare based on birth year
-        while (j >= 0 && player_getBirthYear(&mainPlayers[j]) > player_getBirthYear(&current)) {
+        while(j >= 0 && player_getBirthYear(&mainPlayers[j]) > player_getBirthYear(&current)) {
 
             mainPlayers[j + 1] = mainPlayers[j];
             j--;
@@ -389,11 +389,11 @@ int main() {
         }
 
         // If there's a tie in birth year, compare by name
-        while (j >= 0 && player_getBirthYear(&mainPlayers[j]) == player_getBirthYear(&current)) {
+        while(j >= 0 && player_getBirthYear(&mainPlayers[j]) == player_getBirthYear(&current)) {
 
             comparisons += 2;
 
-            if (strcmp(player_getName(&mainPlayers[j]), player_getName(&current)) > 0) {
+            if(strcmp(player_getName(&mainPlayers[j]), player_getName(&current)) > 0) {
 
                 mainPlayers[j + 1] = mainPlayers[j];
                 j--;
@@ -404,22 +404,22 @@ int main() {
         mainPlayers[j + 1] = current;
 
         // Check if we need to maintain only the top k elements
-        if (i >= k) {
+        if(i >= k) {
 
             comparisons++;
 
-            for (int l = k; l < i; l++) {
+            for(int l = k; l < i; l++) {
 
                 comparisons++;
 
                 player_setBirthYear(&mainPlayers[l], INT_MAX); // Set birth year to a high value for elements outside the top k
             }
             
-            for (int l = k - 1; l >= 0; l--) {
+            for(int l = k - 1; l >= 0; l--) {
 
                 comparisons += 4;
 
-                if (player_getBirthYear(&mainPlayers[l]) > player_getBirthYear(&mainPlayers[l + 1]) ||
+                if(player_getBirthYear(&mainPlayers[l]) > player_getBirthYear(&mainPlayers[l + 1]) ||
                     (player_getBirthYear(&mainPlayers[l]) == player_getBirthYear(&mainPlayers[l + 1]) &&
                     strcmp(player_getName(&mainPlayers[l]), player_getName(&mainPlayers[l + 1])) > 0)) {
 

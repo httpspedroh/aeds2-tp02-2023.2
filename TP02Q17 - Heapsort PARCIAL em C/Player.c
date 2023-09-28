@@ -63,9 +63,9 @@
     void proccess_attribute(char *attribute, char **substringStart, char **substringEnd, bool isFirstAttribute) {
 
         // Skip first comma
-        if (!isFirstAttribute) {
+        if(!isFirstAttribute) {
             
-            if (*substringEnd != NULL) *substringStart = *substringEnd + 1;
+            if(*substringEnd != NULL) *substringStart = *substringEnd + 1;
             else *substringStart = *substringEnd;
         }
 
@@ -73,7 +73,7 @@
         *substringEnd = strchr(*substringStart, ',');
         
         // Get substring
-        if (*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
+        if(*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
         else strcpy(attribute, *substringStart);
 
         // Set default value if attribute is empty
@@ -291,7 +291,7 @@
 
         fp = fopen(FILE_PATH, "r");
 
-        if (fp == NULL) {
+        if(fp == NULL) {
 
             perror("x Error opening file");
             exit(EXIT_FAILURE);
@@ -318,7 +318,7 @@
         // Close file and free memory
         fclose(fp);
 
-        if (line) free(line);
+        if(line) free(line);
     }
 
     // Heapify function
@@ -328,31 +328,31 @@
         int l = 2 * i + 1;
         int r = 2 * i + 2;
 
-        if (l < n) {
+        if(l < n) {
 
             // Compare height of players
             int comparison = player_getHeight(&players[l]) - player_getHeight(&players[largest]);
 
             // In draw case, compare names
-            if (comparison == 0) comparison = strcmp(player_getName(&players[l]), player_getName(&players[largest]));
-            if (comparison > 0) largest = l;
+            if(comparison == 0) comparison = strcmp(player_getName(&players[l]), player_getName(&players[largest]));
+            if(comparison > 0) largest = l;
 
             (*comparisons) += 2;
         }
 
-        if (r < n) {
+        if(r < n) {
             
             // Compare height of players
             int comparison = player_getHeight(&players[r]) - player_getHeight(&players[largest]);
 
             // In draw case, compare names
-            if (comparison == 0) comparison = strcmp(player_getName(&players[r]), player_getName(&players[largest]));
-            if (comparison > 0) largest = r;
+            if(comparison == 0) comparison = strcmp(player_getName(&players[r]), player_getName(&players[largest]));
+            if(comparison > 0) largest = r;
 
             (*comparisons) += 2;
         }
 
-        if (largest != i) {
+        if(largest != i) {
 
             Player aux = players[i];
             players[i] = players[largest];

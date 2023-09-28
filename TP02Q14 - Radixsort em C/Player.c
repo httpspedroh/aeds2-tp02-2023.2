@@ -63,9 +63,9 @@ void substring(char *string, char *stringStart, int length) {
 void proccess_attribute(char *attribute, char **substringStart, char **substringEnd, bool isFirstAttribute) {
 
     // Skip first comma
-    if (!isFirstAttribute) {
+    if(!isFirstAttribute) {
         
-        if (*substringEnd != NULL) *substringStart = *substringEnd + 1;
+        if(*substringEnd != NULL) *substringStart = *substringEnd + 1;
         else *substringStart = *substringEnd;
     }
 
@@ -73,7 +73,7 @@ void proccess_attribute(char *attribute, char **substringStart, char **substring
     *substringEnd = strchr(*substringStart, ',');
     
     // Get substring
-    if (*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
+    if(*substringEnd) substring(attribute, *substringStart, *substringEnd - *substringStart);
     else strcpy(attribute, *substringStart);
 
     // Set default value if attribute is empty
@@ -291,7 +291,7 @@ void startPlayers() {
 
     fp = fopen(FILE_PATH, "r");
 
-    if (fp == NULL) {
+    if(fp == NULL) {
 
         perror("x Error opening file");
         exit(EXIT_FAILURE);
@@ -318,7 +318,7 @@ void startPlayers() {
     // Close file and free memory
     fclose(fp);
 
-    if (line) free(line);
+    if(line) free(line);
 }
 
 // ---------------------------------------------------------------------------------------------------- //
@@ -374,7 +374,7 @@ int main() {
     // Get max id
     int maxId = player_getId(&mainPlayers[0]);
 
-    for (int i = 1; i < m; i++) {
+    for(int i = 1; i < m; i++) {
 
         comparisons++;
 
@@ -388,14 +388,14 @@ int main() {
     }
 
     // Radix main
-    for (int exp = 1; maxId / exp > 0; exp *= 10) {
+    for(int exp = 1; maxId / exp > 0; exp *= 10) {
         
         comparisons++;
 
         Player output[m];
         int count[10] = {0};
 
-        for (int i = 0; i < m; i++) {
+        for(int i = 0; i < m; i++) {
 
             comparisons++;
 
@@ -403,13 +403,13 @@ int main() {
             count[(playerId / exp) % 10]++;
         }
 
-        for (int i = 1; i < 10; i++) {
+        for(int i = 1; i < 10; i++) {
 
             comparisons++;   
             count[i] += count[i - 1];
         }
 
-        for (int i = m - 1; i >= 0; i--) {
+        for(int i = m - 1; i >= 0; i--) {
 
             comparisons++;
 
@@ -419,7 +419,7 @@ int main() {
             count[(playerId / exp) % 10]--;
         }
 
-        for (int i = 0; i < m; i++) {
+        for(int i = 0; i < m; i++) {
             
             comparisons++;
             mainPlayers[i] = output[i];

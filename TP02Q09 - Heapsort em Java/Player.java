@@ -99,9 +99,9 @@ public class Player {
         String[] splitted = line.split(",", -1);
 
         // Fill empty attributes
-        for (int i = 0; i < splitted.length; i++) {
+        for(int i = 0; i < splitted.length; i++) {
 
-            if (splitted[i].equals("")) splitted[i] = "nao informado";
+            if(splitted[i].equals("")) splitted[i] = "nao informado";
         }
 
         // Set attributes
@@ -165,9 +165,9 @@ public class Player {
     public static Player searchById(int id, ArrayList<Player> players) {
 
         // Search for player
-        for (int i = 0; i < players.size(); i++) {
+        for(int i = 0; i < players.size(); i++) {
 
-            if (players.get(i).getId() == id) return players.get(i);
+            if(players.get(i).getId() == id) return players.get(i);
         }
         return null;
     }
@@ -180,12 +180,12 @@ public class Player {
         int right = 2 * root + 2;
     
         comparisons++;
-        if (left < n && players.get(left).compareTo(players.get(largest)) > 0) largest = left;
+        if(left < n && players.get(left).compareTo(players.get(largest)) > 0) largest = left;
     
         comparisons++;
-        if (right < n && players.get(right).compareTo(players.get(largest)) > 0) largest = right;
+        if(right < n && players.get(right).compareTo(players.get(largest)) > 0) largest = right;
     
-        if (largest != root) {
+        if(largest != root) {
             
             Player swap = players.get(root);
             players.set(root, players.get(largest));
@@ -221,7 +221,7 @@ public class Player {
         String line = inScanner.nextLine();
 
         // While line is not "FIM"
-        while (!line.equals("FIM")) {
+        while(!line.equals("FIM")) {
 
             // Get id
             int id = Integer.parseInt(line);
@@ -230,7 +230,7 @@ public class Player {
             player = searchById(id, allPlayers);
 
             // Print player
-            if (player != null) mainPlayers.add(player);
+            if(player != null) mainPlayers.add(player);
 
             // Read line
             line = inScanner.nextLine();
@@ -245,9 +245,9 @@ public class Player {
         int comparisons = 0;
 
         // Heap sort
-        for (int i = mainPlayers.size() / 2 - 1; i >= 0; i--) heapify(mainPlayers, mainPlayers.size(), i, comparisons);
+        for(int i = mainPlayers.size() / 2 - 1; i >= 0; i--) heapify(mainPlayers, mainPlayers.size(), i, comparisons);
 
-        for (int i = mainPlayers.size() - 1; i > 0; i--) {
+        for(int i = mainPlayers.size() - 1; i > 0; i--) {
 
             // Swap the root (maximum element) with the last player
             Player temp = mainPlayers.get(0);
@@ -268,7 +268,7 @@ public class Player {
         // ----------------- //
 
         // Print mainPlayers array
-        for (int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
+        for(int i = 0; i < mainPlayers.size(); i++) mainPlayers.get(i).print();
 
         // ----------------------------------------------------------------- //
 
