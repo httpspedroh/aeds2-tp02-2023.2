@@ -1,6 +1,6 @@
 /**
- * @path TP02Q06 - Ordenação por Seleção Recursiva em C/Player.c
- * @description C file that implements the Player class with recursive selection sort
+ * @path TP02Q14 - Radixsort em C/Player.c
+ * @description C file that implements the Player class with radixsort algorithm
  * @author Pedro Lopes - github.com/httpspedroh
  * @version 1.0
  * @update 2023-09-27
@@ -361,33 +361,75 @@ int main() {
 
     // ----------------------------------------------------------------- //
 
-    // #3 - Order mainPlayers array by key "name" using recursive selection sort
+    // #3 - Order mainPlayers array by key "id"
 
     // Start benchmark
     clock_t startTime = clock();
     int comparisons = 0;
 
-    // Recursive selection sort
-    for(int i = 0; i < m - 1; i++) {
+    // ----------------- //
 
-        int min = i;
+    // Radix sort
+    
+    // Get max id
+    int maxId = player_getId(&mainPlayers[0]);
 
-        for(int j = i + 1; j < m; j++) {
+    for (int i = 1; i < m; i++) {
+
+        comparisons++;
+
+        int playerId = player_getId(&mainPlayers[i]);
+
+        if(playerId > maxId) {
+            
+            maxId = playerId;
+            comparisons++;
+        }
+    }
+
+    // Radix main
+    for (int exp = 1; maxId / exp > 0; exp *= 10) {
+        
+        comparisons++;
+
+        Player output[m];
+        int count[10] = {0};
+
+        for (int i = 0; i < m; i++) {
 
             comparisons++;
 
-            if(strcmp(player_getName(&mainPlayers[j]), player_getName(&mainPlayers[min])) < 0) min = j;
+            int playerId = player_getId(&mainPlayers[i]);
+            count[(playerId / exp) % 10]++;
         }
 
-        Player aux = mainPlayers[i];
-        mainPlayers[i] = mainPlayers[min];
-        mainPlayers[min] = aux;
+        for (int i = 1; i < 10; i++) {
+
+            comparisons++;   
+            count[i] += count[i - 1];
+        }
+
+        for (int i = m - 1; i >= 0; i--) {
+
+            comparisons++;
+
+            int playerId = player_getId(&mainPlayers[i]);
+
+            output[count[(playerId / exp) % 10] - 1] = mainPlayers[i];
+            count[(playerId / exp) % 10]--;
+        }
+
+        for (int i = 0; i < m; i++) {
+            
+            comparisons++;
+            mainPlayers[i] = output[i];
+        }
     }
 
     // ----------------- //
 
     // Save benchmark in file
-    FILE *fp = fopen("753045_selecaoRecursiva.txt", "w");
+    FILE *fp = fopen("753045_radixsort.txt", "w");
     fprintf(fp, "753045\t%.0fms\t%d", (double)(clock() - startTime) / CLOCKS_PER_SEC * 1000.0, comparisons);
     fclose(fp);
 

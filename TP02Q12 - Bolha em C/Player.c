@@ -1,6 +1,6 @@
 /**
- * @path TP02Q06 - Ordenação por Seleção Recursiva em C/Player.c
- * @description C file that implements the Player class with recursive selection sort
+ * @path TP02Q12 - Bolha em C/Player.c
+ * @description C file that implements the Player class with bubble sort
  * @author Pedro Lopes - github.com/httpspedroh
  * @version 1.0
  * @update 2023-09-27
@@ -361,33 +361,45 @@ int main() {
 
     // ----------------------------------------------------------------- //
 
-    // #3 - Order mainPlayers array by key "name" using recursive selection sort
+    // #3 - Order mainPlayers array by key "birthYear", in draw case, order by key "name"
 
     // Start benchmark
     clock_t startTime = clock();
     int comparisons = 0;
 
-    // Recursive selection sort
+    // ----------------- //
+
+    // Bubble sort
     for(int i = 0; i < m - 1; i++) {
 
-        int min = i;
-
-        for(int j = i + 1; j < m; j++) {
+        for(int j = 0; j < m - i - 1; j++) {
 
             comparisons++;
 
-            if(strcmp(player_getName(&mainPlayers[j]), player_getName(&mainPlayers[min])) < 0) min = j;
-        }
+            if(player_getBirthYear(&mainPlayers[j]) > player_getBirthYear(&mainPlayers[j + 1])) {
 
-        Player aux = mainPlayers[i];
-        mainPlayers[i] = mainPlayers[min];
-        mainPlayers[min] = aux;
+                Player aux = mainPlayers[j];
+                mainPlayers[j] = mainPlayers[j + 1];
+                mainPlayers[j + 1] = aux;
+            }
+            else if(player_getBirthYear(&mainPlayers[j]) == player_getBirthYear(&mainPlayers[j + 1])) {
+
+                comparisons++;
+
+                if(strcmp(player_getName(&mainPlayers[j]), player_getName(&mainPlayers[j + 1])) > 0) {
+
+                    Player aux = mainPlayers[j];
+                    mainPlayers[j] = mainPlayers[j + 1];
+                    mainPlayers[j + 1] = aux;
+                }
+            }
+        }
     }
 
     // ----------------- //
 
     // Save benchmark in file
-    FILE *fp = fopen("753045_selecaoRecursiva.txt", "w");
+    FILE *fp = fopen("753045_bolha.txt", "w");
     fprintf(fp, "753045\t%.0fms\t%d", (double)(clock() - startTime) / CLOCKS_PER_SEC * 1000.0, comparisons);
     fclose(fp);
 

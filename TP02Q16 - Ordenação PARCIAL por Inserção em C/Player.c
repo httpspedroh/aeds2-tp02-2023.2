@@ -1,6 +1,6 @@
 /**
- * @path TP02Q06 - Ordenação por Seleção Recursiva em C/Player.c
- * @description C file that implements the Player class with recursive selection sort
+ * @path TP02Q16 - Ordenação PARCIAL por Inserção em C/Player.c
+ * @description C file that implements the Player class with partial insertion sort
  * @author Pedro Lopes - github.com/httpspedroh
  * @version 1.0
  * @update 2023-09-27
@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <limits.h>
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -361,40 +362,87 @@ int main() {
 
     // ----------------------------------------------------------------- //
 
-    // #3 - Order mainPlayers array by key "name" using recursive selection sort
+    // #3 - Order mainPlayers array by key "yearOfBirth" using partial insertion sort, in draw case, order by key "name"
 
     // Start benchmark
     clock_t startTime = clock();
     int comparisons = 0;
 
-    // Recursive selection sort
-    for(int i = 0; i < m - 1; i++) {
+    // ----------------- //
 
-        int min = i;
+    // Partial insertion sort with k = 10
+    int k = 10;
 
-        for(int j = i + 1; j < m; j++) {
+    for (int i = 1; i < m; i++) {
+
+        comparisons++;
+
+        Player current = mainPlayers[i];
+        int j = i - 1;
+
+        // Compare based on birth year
+        while (j >= 0 && player_getBirthYear(&mainPlayers[j]) > player_getBirthYear(&current)) {
+
+            mainPlayers[j + 1] = mainPlayers[j];
+            j--;
+            comparisons++;
+        }
+
+        // If there's a tie in birth year, compare by name
+        while (j >= 0 && player_getBirthYear(&mainPlayers[j]) == player_getBirthYear(&current)) {
+
+            comparisons += 2;
+
+            if (strcmp(player_getName(&mainPlayers[j]), player_getName(&current)) > 0) {
+
+                mainPlayers[j + 1] = mainPlayers[j];
+                j--;
+            } 
+            else break;
+        }
+
+        mainPlayers[j + 1] = current;
+
+        // Check if we need to maintain only the top k elements
+        if (i >= k) {
 
             comparisons++;
 
-            if(strcmp(player_getName(&mainPlayers[j]), player_getName(&mainPlayers[min])) < 0) min = j;
-        }
+            for (int l = k; l < i; l++) {
 
-        Player aux = mainPlayers[i];
-        mainPlayers[i] = mainPlayers[min];
-        mainPlayers[min] = aux;
+                comparisons++;
+
+                player_setBirthYear(&mainPlayers[l], INT_MAX); // Set birth year to a high value for elements outside the top k
+            }
+            
+            for (int l = k - 1; l >= 0; l--) {
+
+                comparisons += 4;
+
+                if (player_getBirthYear(&mainPlayers[l]) > player_getBirthYear(&mainPlayers[l + 1]) ||
+                    (player_getBirthYear(&mainPlayers[l]) == player_getBirthYear(&mainPlayers[l + 1]) &&
+                    strcmp(player_getName(&mainPlayers[l]), player_getName(&mainPlayers[l + 1])) > 0)) {
+
+                    Player temp = mainPlayers[l];
+                    mainPlayers[l] = mainPlayers[l + 1];
+                    mainPlayers[l + 1] = temp;
+                } 
+                else break;
+            }
+        }
     }
 
     // ----------------- //
 
     // Save benchmark in file
-    FILE *fp = fopen("753045_selecaoRecursiva.txt", "w");
+    FILE *fp = fopen("753045_insercaoParcial.txt", "w");
     fprintf(fp, "753045\t%.0fms\t%d", (double)(clock() - startTime) / CLOCKS_PER_SEC * 1000.0, comparisons);
     fclose(fp);
 
     // ----------------- //
 
     // Print mainPlayers array
-    for(int i = 0; i < m; i++) player_print(&mainPlayers[i]);
+    for(int i = 0; i < k; i++) player_print(&mainPlayers[i]);
 
     // ----------------- //
 

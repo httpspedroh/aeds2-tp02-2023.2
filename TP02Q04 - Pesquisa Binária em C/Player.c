@@ -268,9 +268,10 @@ int player_getId(Player *player) { return player -> id; }
 char *player_getName(Player *player) { return player -> name; }
 int player_getHeight(Player *player) { return player -> height; }
 int player_getWeight(Player *player) { return player -> weight; }
+char *player_getCollege(Player *player) { return player -> college; }
+int player_getBirthYear(Player *player) { return player -> birthYear; }
 char *player_getBirthCity(Player *player) { return player -> birthCity; }
 char *player_getBirthState(Player *player) { return player -> birthState; }
-char *player_getCollege(Player *player) { return player -> college; }
 
 // Sets
 void player_setId(Player *player, int id) { player -> id = id; }
