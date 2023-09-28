@@ -234,9 +234,6 @@ Player player_read(char *line) {
 
     // Get college
     proccess_attribute(attribute, &substringStart, &substringEnd, false);
-
-    // if(player_getId(&player) == 2159) printf("attribute: %s\n", attribute);
-
     player_setCollege(&player, attribute);
 
     // Get birth year

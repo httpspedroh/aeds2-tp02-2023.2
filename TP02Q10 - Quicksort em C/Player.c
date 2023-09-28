@@ -1,6 +1,6 @@
 /**
- * @path TP02Q02 - Classe em C/Player.c
- * @description C file that implements the Player class.
+ * @path TP02Q10 - Quicksort em C/Player.c
+ * @description C file that implements the Player class with quicksort algorithm
  * @author Pedro Lopes - github.com/httpspedroh
  * @version 1.0
  * @update 2023-09-27
@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -45,8 +46,8 @@ typedef struct Player {
 // ---------------------------------------------------------------------------------------------------- //
 
 // Global variables
-Player players[MAX_PLAYERS];
-int playersLength = 0;
+Player allPlayers[MAX_PLAYERS];
+int n = 0;
 
 // ---------------------------------------------------------------------------------------------------- //
 
@@ -252,9 +253,9 @@ Player player_read(char *line) {
 
 Player *player_searchById(int id) {
 
-    for(int i = 0; i < playersLength; i++) {
+    for(int i = 0; i < n; i++) {
 
-        if(player_getId(&players[i]) == id) return &players[i];
+        if(player_getId(&allPlayers[i]) == id) return &allPlayers[i];
     }
     return NULL;
 }
@@ -304,9 +305,9 @@ void startPlayers() {
         // Read player from line
         Player player = player_read(line);
 
-        players[playersLength++] = player;
+        allPlayers[n++] = player;
 
-        if(playersLength >= MAX_PLAYERS) {
+        if(n >= MAX_PLAYERS) {
 
             perror("x Max players reached");
             exit(EXIT_FAILURE);
@@ -331,7 +332,12 @@ int main() {
 
     // ----------------------------------------------------------------- //
 
-    // #2 - Read input and print players from pub.in id entries
+    // #2 - Read input and print players from pub.in id entries and add to mainPlayers array
+
+    // Initialize mainPlayers array
+    Player mainPlayers[MAX_PLAYERS];
+    int m = 0;
+
     char in[5];
     scanf(" %[^\n]s", in);
 
@@ -344,13 +350,64 @@ int main() {
 
             Player *player = player_searchById(id);
 
-            if(player) player_print(player);
-            else printf("x Player not found!\n");
+            if(player) mainPlayers[m++] = *player;
 
             // ------------------------- //
     
             scanf(" %[^\n]s", in);
         }
     }
+
+    // ----------------------------------------------------------------- //
+
+    // #3 - Order mainPlayers array by key "birthState", in draw case, order by key "name"
+
+    // Start benchmark
+    clock_t startTime = clock();
+    int comparisons = 0;
+
+    // Quick sort
+    int i = 0, j = 0, k = 0;
+
+    for(i = 0; i < m; i++) {
+
+        for(j = i + 1; j < m; j++) {
+
+            comparisons++;
+
+            if(strcmp(player_getBirthState(&mainPlayers[i]), player_getBirthState(&mainPlayers[j])) > 0) {
+
+                Player temp = mainPlayers[i];
+                mainPlayers[i] = mainPlayers[j];
+                mainPlayers[j] = temp;
+            }
+            else if(strcmp(player_getBirthState(&mainPlayers[i]), player_getBirthState(&mainPlayers[j])) == 0) {
+
+                comparisons++;
+
+                if(strcmp(player_getName(&mainPlayers[i]), player_getName(&mainPlayers[j])) > 0) {
+
+                    Player temp = mainPlayers[i];
+                    mainPlayers[i] = mainPlayers[j];
+                    mainPlayers[j] = temp;
+                }
+            }
+        }
+    }
+
+    // ----------------- //
+
+    // Save benchmark in file
+    FILE *fp = fopen("753045_quicksort.txt", "w");
+    fprintf(fp, "753045\t%.0fms\t%d", (double)(clock() - startTime) / CLOCKS_PER_SEC * 1000.0, comparisons);
+    fclose(fp);
+
+    // ----------------- //
+
+    // Print mainPlayers array
+    for(int i = 0; i < m; i++) player_print(&mainPlayers[i]);
+
+    // ----------------- //
+
     return 0;
 }
