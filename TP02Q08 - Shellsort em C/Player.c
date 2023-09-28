@@ -367,6 +367,8 @@ int main() {
     clock_t startTime = clock();
     int comparisons = 0;
 
+    // ----------------- //
+
     // Shell sort
     for (int gap = m / 2; gap > 0; gap /= 2) {
 
@@ -386,12 +388,13 @@ int main() {
 
                     // In case of a draw in weight, compare by name
                     comparisons++;
-                    
-                    if (strcmp(player_getName(&mainPlayers[j - gap]), player_getName(&temp)) <= 0) break;
-                    else mainPlayers[j] = mainPlayers[j - gap];
+
+                    if (strcmp(player_getName(&mainPlayers[j - gap]), player_getName(&temp)) > 0) mainPlayers[j] = mainPlayers[j - gap];
+                    else break;
                 }
-                else break;
+                else break; // Peso em ordem crescente, saia do loop.
             }
+            
             mainPlayers[j] = temp;
         }
     }
