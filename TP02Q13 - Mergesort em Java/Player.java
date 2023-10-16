@@ -174,6 +174,75 @@ public class Player {
 
     // ---------------------------------------------------------------------------------------------------- //
 
+    // Merge sort helper function
+    public static int mergeSort(ArrayList<Player> arr, int l, int r) {
+
+        if(l < r) {
+
+            int mid = (l + r) / 2;
+
+            int leftComparisons = mergeSort(arr, l, mid);
+            int rightComparisons = mergeSort(arr, mid + 1, r);
+            int mergeComparisons = merge(arr, l, mid, r);
+            return leftComparisons + rightComparisons + mergeComparisons;
+        }
+        return 0;
+    }
+
+    // Merge function
+    public static int merge(ArrayList<Player> arr, int l, int mid, int r) {
+
+        int comparisons = 0;
+        int n1 = mid - l + 1;
+        int n2 = r - mid;
+
+        ArrayList<Player> leftArr = new ArrayList<Player>();
+        ArrayList<Player> rightArr = new ArrayList<Player>();
+
+        for(int i = 0; i < n1; i++) leftArr.add(arr.get(l + i));
+        for(int i = 0; i < n2; i++) rightArr.add(arr.get(mid + 1 + i));
+
+        int i = 0, j = 0, k = l;
+
+        while(i < n1 && j < n2) {
+
+            // Compare players and increment comparisons
+            comparisons++;
+
+            if(leftArr.get(i).getCollege().compareTo(rightArr.get(j).getCollege()) < 0 ||
+                (leftArr.get(i).getCollege().equals(rightArr.get(j).getCollege()) &&
+                leftArr.get(i).getName().compareTo(rightArr.get(j).getName()) <= 0)) {
+                
+                arr.set(k, leftArr.get(i));
+                i++;
+            } 
+            else {
+
+                arr.set(k, rightArr.get(j));
+                j++;
+            }
+
+            k++;
+        }
+
+        while (i < n1) {
+
+            arr.set(k, leftArr.get(i));
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+
+            arr.set(k, rightArr.get(j));
+            j++;
+            k++;
+        }
+        return comparisons;
+    }
+
+    // ---------------------------------------------------------------------------------------------------- //
+
     public static void main(String[] args) {
         
         // ----------------------------------------------------------------- //
